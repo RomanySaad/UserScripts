@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dwayne's Football Pool User Script
 // @namespace    https://armchair.club/
-// @version      0.8.1
+// @version      0.8.2
 // @description  User Script for Dwayne's Football Pool
 // @author       Romany Saad
 // @match        https://armchair.club/*
@@ -35,7 +35,7 @@ if (window.location.href.indexOf("grid.cfm") > -1) {
         var innerText = ($(this).text() || "").toString().toLowerCase();
         if (friendsArray.indexOf(innerText) > -1) {
             //console.log(headerCells.index(this));
-            var i = headerCells.index(this) + 1;
+            var i = headerCells.index(this) + 3;
             $('table.table-condensed tr td:nth-child(' + i + ')').addClass("danger");
         }
 
