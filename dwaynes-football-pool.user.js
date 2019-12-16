@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dwayne's Football Pool User Script
 // @namespace    https://armchair.club/
-// @version      0.8
+// @version      0.8.1
 // @description  User Script for Dwayne's Football Pool
 // @author       Romany Saad
 // @match        https://armchair.club/*
@@ -106,7 +106,7 @@ if (window.location.href.indexOf("grid.cfm") > -1) {
 }
 
 function toggleFriend(element, friendName) {
-    var i = headerCells.index(element) + 1;
+    var i = headerCells.index(element) + 3;
     var column = $('table.table-condensed tr td:nth-child(' + i + ')');
 
     var friendIndex = friendsArray.indexOf(friendName);
