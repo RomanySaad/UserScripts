@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dwayne's Football Pool User Script
 // @namespace    https://armchair.club/
-// @version      0.8.2
+// @version      0.8.3
 // @description  User Script for Dwayne's Football Pool
 // @author       Romany Saad
 // @match        https://armchair.club/*
@@ -30,12 +30,30 @@ friendsArray.forEach(function (friendName) {
 });
 
 if (window.location.href.indexOf("grid.cfm") > -1) {
-    var headerCells = $("table.table-condensed tr").first().find("td:gt(1)");
+    var headerCells = $("table.table-condensed tr").first().find("td:gt(2)");
+
+    var currentUser = headerCells.filter(function(){
+        var color = $(this).css("background-color");
+        return color === "rgb(254, 243, 180)" ;
+    }).text();
+
+    var selectList = document.createElement("select");
+    selectList.id = "permutationSelect";
+    selectList.style = "position:fixed; top:200px; left:5px; width: 230px; z-index: 999;";
+
+    $("body").append(selectList);
+
     headerCells.each(function () {
         var innerText = ($(this).text() || "").toString().toLowerCase();
+
+        var option = document.createElement("option");
+        option.value = headerCells.index(this);
+        option.text = innerText;
+        option.selected = (currentUser == innerText);
+
         if (friendsArray.indexOf(innerText) > -1) {
             //console.log(headerCells.index(this));
-            var i = headerCells.index(this) + 3;
+            var i = headerCells.index(this) + 4;
             $('table.table-condensed tr td:nth-child(' + i + ')').addClass("danger");
         }
 
@@ -43,6 +61,8 @@ if (window.location.href.indexOf("grid.cfm") > -1) {
         $(this).on("click", function () {
             toggleFriend($(this), $(this).text());
         });
+
+        selectList.appendChild(option);
     });
 
     var rows = $("table.table-condensed tr:gt(0)");
@@ -94,7 +114,7 @@ if (window.location.href.indexOf("grid.cfm") > -1) {
     permutationButton.id = "permutationButton";
     permutationButton.type = "button";
     permutationButton.classList = "btn btn-primary";
-    permutationButton.style = "position:fixed; top:200px; left:5px; width: 230px; z-index: 999;";
+    permutationButton.style = "position:fixed; top:240px; left:5px; width: 230px; z-index: 999;";
 
     var buttonText = document.createTextNode('Permutation Computation');
 
@@ -199,16 +219,7 @@ function PermutationComputation() {
 
         var rankArray = [];
         var sumOfRanks = 0;
-        var userIndex = 0;
-
-        var headerColumns = $($("table.table-condensed tr")[0]).find('td');
-
-        headerColumns.each(function () {
-            if (($(this).text() || "").toString().toUpperCase() == "SUPAFLY") {
-                userIndex = headerColumns.index(this) - 3;
-                //console.log(userIndex);
-            }
-        });
+        var userIndex = $("#permutationSelect").val();
 
         for (var i = permutationMinDec; i <= permutationMaxDec; i++) {
             var progressValue = (i / permutationMaxDec * 100);
@@ -230,8 +241,8 @@ function PermutationComputation() {
 
                 //console.log(resultToTest);
 
-                var awayCells = $(awayRow).find('td');
-                var homeCells = $(homeRow).find('td');
+                var awayCells = $(awayRow).find('td:gt(2)');
+                var homeCells = $(homeRow).find('td:gt(2)');
                 var currentCells;
 
                 if (resultToTest === 0) {
@@ -242,7 +253,7 @@ function PermutationComputation() {
                 }
 
                 currentCells.each(function () {
-                    var currentIndex = currentCells.index(this) - 3;
+                    var currentIndex = currentCells.index(this);
 
                     if (currentIndex > -1) {
                         if (currentIndex == userIndex) {
@@ -291,6 +302,7 @@ function PermutationComputation() {
         console.log(sumOfRanks);
 
         $('.progress').hide();
+        $("#permutationSelect").hide();
 
         var resultTable = document.createElement("table");
         resultTable.id = "resultTable";
@@ -315,7 +327,7 @@ function PermutationComputation() {
 
         var tbody = document.createElement('tbody');
 
-        for (var x = 0; x < 50; x++) {
+        for (var x = 0; x < rankArray.length; x++) {
             var currentValue = rankArray[x];
 
             if (currentValue) {
@@ -338,7 +350,6 @@ function PermutationComputation() {
         $("body").append(resultTable);
     }
 }
-
 
 function comparer(index) {
     return function (a, b) {
