@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Ebay Cost Calculator
 // @namespace    https://www.ebay.com/
-// @version      0.2
-// @description  User Script for Dwayne's Football Pool
+// @version      0.3
+// @description  User Script for Ebay Cost Calculator
 // @author       Romany Saad
 // @match        https://www.ebay.com/*
 // @updateURL    https://raw.githubusercontent.com/RomanySaad/UserScripts/master/ebay-cost-calculator.user.js
