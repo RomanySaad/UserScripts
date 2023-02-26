@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Amazon Order Helper
 // @namespace    https://www.amazon.com/
-// @version      0.1
+// @version      0.2
 // @description  User Script for Amazon Order Helper
 // @author       Romany Saad
-// @match        https://www.amazon.com/gp/css/order-history/*
-// @match        https://www.amazon.com/gp/your-account/order-history/*
+// @match        https://www.amazon.com/gp/css/order-history*
+// @match        https://www.amazon.com/gp/your-account/order-history*
+// @match        https://www.amazon.com/your-orders/orders*
 // @updateURL    https://raw.githubusercontent.com/RomanySaad/UserScripts/master/amazon-order-helper.user.js
 // @downloadURL  https://raw.githubusercontent.com/RomanySaad/UserScripts/master/amazon-order-helper.user.js
 // ==/UserScript==
