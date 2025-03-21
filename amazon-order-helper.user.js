@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Amazon Order Helper
 // @namespace    https://www.amazon.com/
-// @version      0.3
+// @version      0.4
 // @description  User Script for Amazon Order Helper
 // @author       Romany Saad
 // @match        https://www.amazon.com/gp/css/order-history*
@@ -32,5 +32,5 @@
 })();
 
 function insertTextBox(element) {
-    element.insertAdjacentHTML("afterend", `<input style="width: 100%; cursor: pointer;" value="${element.innerText.replace('"', '&quot;')}" onClick="navigator.clipboard.writeText('${element.innerText.replace('"', '&quot;')}')"></input>`);
+    element.insertAdjacentHTML("afterend", `<input style="width: 100%; cursor: pointer;" value="${element.innerText.replace('"', '&quot;')}" onClick='navigator.clipboard.writeText("${element.innerText.replace(/"/g, '\\&quot;').replace(/'/g, '&apos;')}")'></input>`);
 };
